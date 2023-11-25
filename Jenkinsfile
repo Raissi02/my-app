@@ -1,38 +1,38 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Build Docker Image') {
-      steps {
-        script {
-          docker.build("raissi02/my-app:latest")
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("raissi02/my-app:latest")
+                }
+            }
         }
-      }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com/v1/', 'raissi02') {
+                        docker.image("raissi02/my-app:latest").push()
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh "kubectl apply -f kubernetes/deployment.yaml"
+                }
+            }
+        }
     }
 
-    stage('Push to Docker Hub') {
-      steps {
-        script {
-          docker.withRegistry('https://registry.hub.docker.com', 'raissi02') {
-            docker.image("raissi02/my-app:latest").push()
-          }
+    post {
+        always {
+            // Clean up resources if needed
         }
-      }
     }
-
-    stage('Deploy to Kubernetes') {
-      steps {
-        script {
-          sh "kubectl apply -f kubernetes/deployment.yaml"
-        }
-      }
-    }
-  }
-  post {
-    always {
-      // Clean up resources if needed
-    }
-  }
 }
 
- 
