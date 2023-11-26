@@ -29,10 +29,10 @@ pipeline {
         }
     }
 
-    post {
+   /* post {
         always {
             // Clean up resources if needed
         }
-    }
+    } */
 }
 
