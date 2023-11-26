@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: raissi02/my-app:latest
+        image: Raissi02/my-app:latest
         resources:
           limits:
             memory: "128Mi"

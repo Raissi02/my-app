@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("raissi02/my-app:latest")
+                    docker.build("Raissi02/my-app:latest")
                 }
             }
         }
